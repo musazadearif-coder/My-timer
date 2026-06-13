@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru" manifest="cache.appcache">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>Таймер</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: -apple-system, Helvetica, Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        #time-display {
+            font-size: 14vw;
+            font-weight: bold;
+            font-variant-numeric: tabular-nums;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="time-display">00:00:00.<small>000</small></div>
+
+    <script>
+        var display = document.getElementById('time-display');
+
+        function updateClock() {
+            var now = new Date();
+            var hours = String(now.getHours()).padStart(2, '0');
+            var minutes = String(now.getMinutes()).padStart(2, '0');
+            var seconds = String(now.getSeconds()).padStart(2, '0');
+            var ms = String(now.getMilliseconds()).padStart(3, '0');
+
+            display.innerHTML = hours + ':' + minutes + ':' + seconds + '.<small>' + ms + '</small>';
+
+            if (window.requestAnimationFrame) {
+                window.requestAnimationFrame(updateClock);
+            } else {
+                setTimeout(updateClock, 10);
+            }
+        }
+
+        updateClock();
+    </script>
+</body>
+</html>
