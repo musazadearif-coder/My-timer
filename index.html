@@ -5,19 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Digital ZenClock</title>
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>Digital Clock</title>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             background-color: #000000;
             color: #ffffff;
-            font-family: 'Courier New', Courier, monospace;
+            font-family: 'Courier Prime', monospace;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
             overflow: hidden;
-            user-select: none;
         }
         .digital-container {
             text-align: center;
@@ -26,16 +27,16 @@
             display: flex;
             align-items: baseline;
             justify-content: center;
+            gap: 15px;
         }
         .time {
             font-size: 120px;
-            font-weight: bold;
+            font-weight: 700;
             letter-spacing: -2px;
         }
         .seconds {
             font-size: 50px;
-            margin-left: 15px;
-            font-weight: normal;
+            font-weight: 400;
         }
         .date {
             font-size: 28px;
@@ -64,15 +65,4 @@
             const hours = now.getHours();
 
             const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: false };
-            let timeString = new Intl.DateTimeFormat(locale, timeOptions).format(now);
-            
-            if (timeString.includes(' ')) {
-                const parts = timeString.split(' ');
-                timeString = parts[0];
-            }
-
-            document.getElementById('digital-time').textContent = timeString;
-            document.getElementById('digital-seconds').textContent = String(seconds).padStart(2, '0');
-
-            const dateOptions = { weekday: 'long', day: '2-digit', month: '2-digit', year: 'numeric' };
-            let dateString = new Intl.DateTimeFormat(locale,
+            let timeString = new Intl.DateTimeFormat(locale, time
