@@ -6,7 +6,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="mobile-web-app-capable" content="yes">
-    <title>Clocks Pro Exact Edition</title>
+    <title>Clocks Pro Site</title>
+    <link href="https://fonts.cdnfonts.com/css/ds-digital" rel="stylesheet">
     <style>
         * { box-sizing: border-box; }
         body {
@@ -26,32 +27,30 @@
             flex-direction: row;
             align-items: center;
             justify-content: center;
-            gap: 65px;
+            gap: 60px;
             width: 100%;
-            max-width: 950px;
+            max-width: 900px;
             padding: 20px;
         }
         .analog-clock {
-            width: 280px;
-            height: 280px;
+            width: 300px;
+            height: 300px;
             position: relative;
             flex-shrink: 0;
         }
         .face-mark {
             position: absolute;
-            width: 8px;
-            height: 30px;
+            width: 4px;
+            height: 25px;
             background-color: #ffffff;
             top: 0;
-            left: calc(50% - 4px);
-            transform-origin: center 140px;
-            border-radius: 2px;
+            left: calc(50% - 2px);
+            transform-origin: center 150px;
         }
         .face-mark.minor {
-            height: 20px;
-            width: 4px;
-            left: calc(50% - 2px);
-            opacity: 0.8;
+            height: 12px;
+            width: 2px;
+            left: calc(50% - 1px);
         }
         .hand {
             position: absolute;
@@ -59,30 +58,20 @@
             bottom: 50%;
             left: 50%;
             transform-origin: center bottom;
+            border-radius: 4px;
         }
-        .hour-hand { 
-            width: 10px; 
-            height: 75px; 
-            margin-left: -5px; 
-            z-index: 2;
-            border-radius: 3px 3px 0 0;
-        }
-        .minute-hand { 
-            width: 6px; 
-            height: 110px; 
-            margin-left: -3px; 
-            z-index: 1;
-            border-radius: 2px 2px 0 0;
-        }
-        .second-hand { 
-            width: 2.5px; 
-            height: 145px; 
-            margin-left: -1.25px; 
-            background-color: #ff3b30; 
-            z-index: 3;
-            bottom: calc(50% - 25px);
-            transform-origin: center calc(100% - 25px);
-            border-radius: 1px;
+        .hour-hand { width: 8px; height: 80px; margin-left: -4px; z-index: 3; }
+        .minute-hand { width: 6px; height: 120px; margin-left: -3px; z-index: 2; }
+        .second-hand { width: 2px; height: 135px; margin-left: -1px; background-color: #ff4d4d; z-index: 1; }
+        .center-dot {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background-color: #ff4d4d;
+            border-radius: 50%;
+            top: calc(50% - 6px);
+            left: calc(50% - 6px);
+            z-index: 4;
         }
         .digital-container {
             display: flex;
@@ -93,38 +82,36 @@
             display: flex;
             align-items: baseline;
             justify-content: flex-start;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            font-weight: 400;
+            font-family: 'DS-Digital', sans-serif;
         }
         .time {
-            font-size: 115px;
+            font-size: 140px;
+            font-weight: bold;
             color: #ffffff;
-            line-height: 0.9;
-            letter-spacing: -1px;
-            width: 320px;
+            line-height: 1;
+            width: 350px;
             text-align: right;
-            padding-right: 12px;
+            padding-right: 10px;
         }
         .seconds {
-            font-size: 55px;
+            font-size: 65px;
+            font-weight: bold;
             color: #ffffff;
-            line-height: 0.9;
+            line-height: 1;
             width: 80px;
             text-align: left;
-            font-weight: 300;
         }
         .date {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            font-size: 26px;
+            font-size: 28px;
             font-weight: 400;
             color: #ffffff;
-            margin-top: 15px;
-            letter-spacing: 0.5px;
+            margin-top: 10px;
+            letter-spacing: 1px;
             white-space: nowrap;
             width: 100%;
             text-align: left;
-            padding-left: 12px;
-            opacity: 0.9;
+            padding-left: 10px;
         }
     </style>
 </head>
@@ -132,6 +119,7 @@
 
     <div class="main-container">
         <div class="analog-clock">
+            <div class="center-dot"></div>
             <div class="hand hour-hand" id="hour"></div>
             <div class="hand minute-hand" id="minute"></div>
             <div class="hand second-hand" id="second"></div>
@@ -178,9 +166,10 @@
             document.getElementById('minute').style.transform = `rotate(${minuteDegrees}deg)`;
             document.getElementById('hour').style.transform = `rotate(${hourDegrees}deg)`;
 
-            const hoursStr = String(hours24).padStart(2, '0');
-            const minutesStr = String(minutes).padStart(2, '0');
-            document.getElementById('digital-time').textContent = `${hoursStr}:${minutesStr}`;
+            const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: false };
+            let timeString = new Intl.DateTimeFormat(locale, timeOptions).format(now);
+
+            document.getElementById('digital-time').textContent = timeString;
             document.getElementById('digital-seconds').textContent = String(seconds).padStart(2, '0');
 
             const dateOptions = { weekday: 'long', day: '2-digit', month: '2-digit', year: 'numeric' };
