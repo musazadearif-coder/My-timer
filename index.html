@@ -47,6 +47,7 @@
             background-color: #ffffff;
             top: 0;
             left: calc(50% - 3px);
+            -webkit-transform-origin: center 130px;
             transform-origin: center 130px;
             border-radius: 3px;
         }
@@ -55,6 +56,7 @@
             background-color: #ffffff;
             bottom: 50%;
             left: 50%;
+            -webkit-transform-origin: center bottom;
             transform-origin: center bottom;
             border-radius: 4px 4px 2px 2px;
         }
@@ -125,18 +127,18 @@
             <div class="hand minute-hand" id="minute"></div>
             <div class="hand second-hand" id="second"></div>
             
-            <div class="face-mark" style="transform: rotate(0deg);"></div>
-            <div class="face-mark" style="transform: rotate(30deg);"></div>
-            <div class="face-mark" style="transform: rotate(60deg);"></div>
-            <div class="face-mark" style="transform: rotate(90deg);"></div>
-            <div class="face-mark" style="transform: rotate(120deg);"></div>
-            <div class="face-mark" style="transform: rotate(150deg);"></div>
-            <div class="face-mark" style="transform: rotate(180deg);"></div>
-            <div class="face-mark" style="transform: rotate(210deg);"></div>
-            <div class="face-mark" style="transform: rotate(240deg);"></div>
-            <div class="face-mark" style="transform: rotate(270deg);"></div>
-            <div class="face-mark" style="transform: rotate(300deg);"></div>
-            <div class="face-mark" style="transform: rotate(330deg);"></div>
+            <div class="face-mark" style="-webkit-transform: rotate(0deg); transform: rotate(0deg);"></div>
+            <div class="face-mark" style="-webkit-transform: rotate(30deg); transform: rotate(30deg);"></div>
+            <div class="face-mark" style="-webkit-transform: rotate(60deg); transform: rotate(60deg);"></div>
+            <div class="face-mark" style="-webkit-transform: rotate(90deg); transform: rotate(90deg);"></div>
+            <div class="face-mark" style="-webkit-transform: rotate(120deg); transform: rotate(120deg);"></div>
+            <div class="face-mark" style="-webkit-transform: rotate(150deg); transform: rotate(150deg);"></div>
+            <div class="face-mark" style="-webkit-transform: rotate(180deg); transform: rotate(180deg);"></div>
+            <div class="face-mark" style="-webkit-transform: rotate(210deg); transform: rotate(210deg);"></div>
+            <div class="face-mark" style="-webkit-transform: rotate(240deg); transform: rotate(240deg);"></div>
+            <div class="face-mark" style="-webkit-transform: rotate(270deg); transform: rotate(270deg);"></div>
+            <div class="face-mark" style="-webkit-transform: rotate(300deg); transform: rotate(300deg);"></div>
+            <div class="face-mark" style="-webkit-transform: rotate(330deg); transform: rotate(330deg);"></div>
         </div>
 
         <div class="digital-container">
@@ -170,9 +172,18 @@
             var minuteDegrees = (minutes * 6 + seconds * 0.1);
             var hourDegrees = (hours12 * 30 + minutes * 0.5);
 
-            document.getElementById('second').style.transform = 'rotate(' + secondDegrees + 'deg)';
-            document.getElementById('minute').style.transform = 'rotate(' + minuteDegrees + 'deg)';
-            document.getElementById('hour').style.transform = 'rotate(' + hourDegrees + 'deg)';
+            var secHand = document.getElementById('second');
+            var minHand = document.getElementById('minute');
+            var hrHand = document.getElementById('hour');
+
+            secHand.style.webkitTransform = 'rotate(' + secondDegrees + 'deg)';
+            secHand.style.transform = 'rotate(' + secondDegrees + 'deg)';
+            
+            minHand.style.webkitTransform = 'rotate(' + minuteDegrees + 'deg)';
+            minHand.style.transform = 'rotate(' + minuteDegrees + 'deg)';
+            
+            hrHand.style.webkitTransform = 'rotate(' + hourDegrees + 'deg)';
+            hrHand.style.transform = 'rotate(' + hourDegrees + 'deg)';
 
             var strHours = zeroPad(hours24);
             var strMinutes = zeroPad(minutes);
