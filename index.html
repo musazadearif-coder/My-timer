@@ -154,6 +154,10 @@
         var daysRu = ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'];
         var daysEn = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
 
+        function zeroPad(num) {
+            return num < 10 ? '0' + num : '' + num;
+        }
+
         function updateClock() {
             var now = new Date();
             var hours24 = now.getHours();
@@ -170,15 +174,15 @@
             document.getElementById('minute').style.transform = 'rotate(' + minuteDegrees + 'deg)';
             document.getElementById('hour').style.transform = 'rotate(' + hourDegrees + 'deg)';
 
-            var strHours = String(hours24).padStart(2, '0');
-            var strMinutes = String(minutes).padStart(2, '0');
-            var strSeconds = String(seconds).padStart(2, '0');
+            var strHours = zeroPad(hours24);
+            var strMinutes = zeroPad(minutes);
+            var strSeconds = zeroPad(seconds);
 
             document.getElementById('digital-time').textContent = strHours + ':' + strMinutes;
             document.getElementById('digital-seconds').textContent = strSeconds;
 
-            var day = String(now.getDate()).padStart(2, '0');
-            var month = String(now.getMonth() + 1).padStart(2, '0');
+            var day = zeroPad(now.getDate());
+            var month = zeroPad(now.getMonth() + 1);
             var year = now.getFullYear();
 
             var userLang = (navigator.language || navigator.userLanguage || 'ru-RU').toLowerCase();
@@ -189,22 +193,6 @@
             }
 
             document.getElementById('date-display').textContent = dayName + ', ' + day + '.' + month + '.' + year;
-        }
-
-        if (!String.prototype.padStart) {
-            String.prototype.padStart = function padStart(targetLength, padString) {
-                targetLength = targetLength >> 0;
-                padString = String(typeof padString !== 'undefined' ? padString : ' ');
-                if (this.length > targetLength) {
-                    return String(this);
-                } else {
-                    targetLength = targetLength - this.length;
-                    if (targetLength > padString.length) {
-                        padString += padString.repeat(targetLength / padString.length);
-                    }
-                    return padString.slice(0, targetLength) + String(this);
-                }
-            };
         }
 
         setInterval(updateClock, 16); 
